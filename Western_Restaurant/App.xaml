@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:Western_Restaurant.Converters"
+             x:Class="Western_Restaurant.App">
+    <Application.Resources>
+        <ResourceDictionary>
+
+            <!-- ========== VALUE CONVERTERS ========== -->
+            <converters:InvertBoolConverter x:Key="InvertBoolConverter" />
+            <converters:IsEmptyConverter x:Key="IsEmptyConverter" />
+            <converters:IsNotEmptyConverter x:Key="IsNotEmptyConverter" />
+            <converters:BoolToTtsLabelConverter x:Key="BoolToTtsLabelConverter" />
+            <converters:BoolToAvailableLabelConverter x:Key="BoolToAvailableLabelConverter" />
+            <converters:BoolToCategoryBgConverter x:Key="BoolToCategoryBgConverter" />
+            <converters:BoolToCategoryStrokeConverter x:Key="BoolToCategoryStrokeConverter" />
+            <converters:BoolToCategoryTextConverter x:Key="BoolToCategoryTextConverter" />
+
+            <!-- ========== COLOR PALETTE ========== -->
+            <Color x:Key="PrimaryColor">#8B1A2B</Color>
+            <Color x:Key="PrimaryDarkColor">#6B0015</Color>
+            <Color x:Key="PrimaryLightColor">#C44D5E</Color>
+            <Color x:Key="SecondaryColor">#D4A843</Color>
+            <Color x:Key="SecondaryLightColor">#F0D68A</Color>
+            <Color x:Key="AccentColor">#5C3D2E</Color>
+            <Color x:Key="LightBackground">#FFF8F0</Color>
+            <Color x:Key="LightSurface">#FFFFFF</Color>
+            <Color x:Key="DarkBackground">#1A1A1A</Color>
+            <Color x:Key="DarkSurface">#2D2D2D</Color>
+            <Color x:Key="LightTextPrimary">#2D1810</Color>
+            <Color x:Key="LightTextSecondary">#7A6B62</Color>
+            <Color x:Key="DarkTextPrimary">#F5E6D3</Color>
+            <Color x:Key="DarkTextSecondary">#B0A090</Color>
+            <Color x:Key="SuccessColor">#2E7D32</Color>
+            <Color x:Key="ErrorColor">#C62828</Color>
+            <Color x:Key="WarningColor">#F57F17</Color>
+
+            <!-- ========== FONT SIZES ========== -->
+            <x:Double x:Key="FontSizeSmall">12</x:Double>
+            <x:Double x:Key="FontSizeBody">14</x:Double>
+            <x:Double x:Key="FontSizeMedium">16</x:Double>
+            <x:Double x:Key="FontSizeLarge">20</x:Double>
+            <x:Double x:Key="FontSizeTitle">24</x:Double>
+            <x:Double x:Key="FontSizeHeader">28</x:Double>
+
+            <!-- ========== CORNER RADIUS ========== -->
+            <x:Double x:Key="CornerRadiusSmall">8</x:Double>
+            <x:Double x:Key="CornerRadiusMedium">12</x:Double>
+            <x:Double x:Key="CornerRadiusLarge">16</x:Double>
+
+            <!-- ========== SHADOWS ========== -->
+            <Shadow x:Key="CardShadow"
+                    Brush="#40000000"
+                    Offset="0,4"
+                    Radius="8"
+                    Opacity="0.15" />
+
+            <!-- ========== STYLES ========== -->
+            <Style TargetType="NavigationPage">
+                <Setter Property="BarBackgroundColor" Value="{StaticResource PrimaryColor}" />
+                <Setter Property="BarTextColor" Value="White" />
+            </Style>
+
+            <Style TargetType="Shell" ApplyToDerivedTypes="True">
+                <Setter Property="Shell.BackgroundColor" Value="{StaticResource PrimaryColor}" />
+                <Setter Property="Shell.ForegroundColor" Value="White" />
+                <Setter Property="Shell.TitleColor" Value="White" />
+                <Setter Property="Shell.UnselectedColor" Value="#E0B0B8" />
+            </Style>
+
+            <Style x:Key="PageStyle" TargetType="ContentPage">
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource LightBackground}, Dark={StaticResource DarkBackground}}" />
+            </Style>
+
+            <Style x:Key="CardFrame" TargetType="Frame">
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource LightSurface}, Dark={StaticResource DarkSurface}}" />
+                <Setter Property="CornerRadius" Value="{StaticResource CornerRadiusMedium}" />
+                <Setter Property="Padding" Value="12" />
+                <Setter Property="HasShadow" Value="True" />
+                <Setter Property="BorderColor" Value="Transparent" />
+            </Style>
+
+            <Style x:Key="PrimaryButton" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="{StaticResource PrimaryColor}" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="CornerRadius" Value="{StaticResource CornerRadiusSmall}" />
+                <Setter Property="FontSize" Value="{DynamicResource FontSizeBody}" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="Padding" Value="16,10" />
+                <Setter Property="HeightRequest" Value="44" />
+            </Style>
+
+            <Style x:Key="SecondaryButton" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="Transparent" />
+                <Setter Property="TextColor" Value="{StaticResource PrimaryColor}" />
+                <Setter Property="BorderColor" Value="{StaticResource PrimaryColor}" />
+                <Setter Property="BorderWidth" Value="1.5" />
+                <Setter Property="CornerRadius" Value="{StaticResource CornerRadiusSmall}" />
+                <Setter Property="FontSize" Value="{DynamicResource FontSizeBody}" />
+                <Setter Property="Padding" Value="16,10" />
+                <Setter Property="HeightRequest" Value="44" />
+            </Style>
+
+            <Style x:Key="TitleLabel" TargetType="Label">
+                <Setter Property="FontSize" Value="{DynamicResource FontSizeTitle}" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource LightTextPrimary}, Dark={StaticResource DarkTextPrimary}}" />
+            </Style>
+
+            <Style x:Key="SubtitleLabel" TargetType="Label">
+                <Setter Property="FontSize" Value="{DynamicResource FontSizeMedium}" />
+                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource LightTextSecondary}, Dark={StaticResource DarkTextSecondary}}" />
+            </Style>
+
+            <Style x:Key="BodyLabel" TargetType="Label">
+                <Setter Property="FontSize" Value="{DynamicResource FontSizeBody}" />
+                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource LightTextPrimary}, Dark={StaticResource DarkTextPrimary}}" />
+            </Style>
+
+            <Style x:Key="ErrorLabel" TargetType="Label">
+                <Setter Property="FontSize" Value="{DynamicResource FontSizeSmall}" />
+                <Setter Property="TextColor" Value="{StaticResource ErrorColor}" />
+                <Setter Property="IsVisible" Value="False" />
+            </Style>
+
+            <Style x:Key="EntryStyle" TargetType="Entry">
+                <Setter Property="FontSize" Value="{DynamicResource FontSizeBody}" />
+                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource LightTextPrimary}, Dark={StaticResource DarkTextPrimary}}" />
+                <Setter Property="PlaceholderColor" Value="{AppThemeBinding Light={StaticResource LightTextSecondary}, Dark={StaticResource DarkTextSecondary}}" />
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource LightSurface}, Dark={StaticResource DarkSurface}}" />
+            </Style>
+
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

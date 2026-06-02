@@ -25,3 +25,4 @@ Desktop.ini
 
 # Local build redirection output is configured outside the repo:
 # C:\MauiBuild\FoodDrinkApp
+.DS_Store
