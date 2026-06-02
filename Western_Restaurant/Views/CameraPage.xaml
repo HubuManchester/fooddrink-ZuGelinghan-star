@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Western_Restaurant.Views.CameraPage"
+             Style="{StaticResource PageStyle}"
+             Title="Camera Test">
+
+    <Grid RowDefinitions="*,Auto" Padding="16" RowSpacing="16">
+        <Border Grid.Row="0" StrokeShape="RoundRectangle 16" HeightRequest="350"
+                BackgroundColor="{AppThemeBinding Light=#F5E6D3, Dark=#3D3025}" Stroke="{AppThemeBinding Light=#DDD, Dark=#555}">
+            <Grid>
+                <VerticalStackLayout x:Name="PlaceholderView" VerticalOptions="Center" HorizontalOptions="Center" Spacing="12">
+                    <Label Text="&#x1F4F7;" FontSize="64" HorizontalOptions="Center" />
+                    <Label Text="Take a photo or pick from gallery" Style="{StaticResource SubtitleLabel}" HorizontalOptions="Center" />
+                </VerticalStackLayout>
+                <Image x:Name="PhotoImage" Aspect="AspectFill" IsVisible="False" />
+                <Button x:Name="ClearButton" Text="&#x2715;" BackgroundColor="#CC000000" TextColor="White" CornerRadius="16" WidthRequest="36" HeightRequest="36" FontSize="14" Padding="0"
+                        HorizontalOptions="End" VerticalOptions="Start" Margin="4" IsVisible="False" Clicked="OnClearPhotoClicked" />
+            </Grid>
+        </Border>
+
+        <StackLayout Grid.Row="1" Spacing="12">
+            <Label Text="Test your device hardware" Style="{StaticResource BodyLabel}" HorizontalOptions="Center" />
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                <Button Grid.Column="0" Text="&#x1F4F7; Take Photo" Style="{StaticResource PrimaryButton}" Clicked="OnTakePhotoClicked" />
+                <Button Grid.Column="1" Text="&#x1F5BC; Gallery" Style="{StaticResource SecondaryButton}" Clicked="OnPickPhotoClicked" />
+            </Grid>
+            <Label x:Name="StatusLabel" Text="Ready" Style="{StaticResource SubtitleLabel}" HorizontalOptions="Center" />
+        </StackLayout>
+    </Grid>
+</ContentPage>

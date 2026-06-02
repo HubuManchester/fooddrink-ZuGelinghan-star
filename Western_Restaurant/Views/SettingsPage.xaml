@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Western_Restaurant.ViewModels"
+             x:Class="Western_Restaurant.Views.SettingsPage"
+             x:DataType="vm:SettingsViewModel"
+             Style="{StaticResource PageStyle}"
+             Title="{Binding Title}">
+
+    <ScrollView>
+        <StackLayout Padding="16" Spacing="20">
+
+            <Label Text="Appearance" Style="{StaticResource TitleLabel}" />
+
+            <!-- Dark mode -->
+            <Border Style="{StaticResource CardFrame}">
+                <Grid ColumnDefinitions="*,Auto">
+                    <StackLayout Grid.Column="0" Spacing="2">
+                        <Label Text="Dark Mode" FontSize="{DynamicResource FontSizeMedium}" FontAttributes="Bold"
+                               TextColor="{AppThemeBinding Light={StaticResource LightTextPrimary}, Dark={StaticResource DarkTextPrimary}}" />
+                        <Label Text="Switch between light and dark themes" Style="{StaticResource SubtitleLabel}" />
+                    </StackLayout>
+                    <Switch Grid.Column="1" IsToggled="{Binding IsDarkMode}" OnColor="{StaticResource PrimaryColor}" VerticalOptions="Center" />
+                </Grid>
+            </Border>
+
+            <!-- Font size -->
+            <Border Style="{StaticResource CardFrame}">
+                <StackLayout Spacing="8">
+                    <Label Text="Font Size" FontSize="{DynamicResource FontSizeMedium}" FontAttributes="Bold"
+                           TextColor="{AppThemeBinding Light={StaticResource LightTextPrimary}, Dark={StaticResource DarkTextPrimary}}" />
+                    <Label Text="{Binding FontSizeLabel}" Style="{StaticResource SubtitleLabel}" />
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                        <Button Grid.Column="0" Text="A-" Style="{StaticResource SecondaryButton}" WidthRequest="48" Command="{Binding DecreaseFontSizeCommand}" />
+                        <Button Grid.Column="1" Text="Reset" BackgroundColor="Transparent" TextColor="{StaticResource PrimaryColor}" FontSize="{DynamicResource FontSizeSmall}" Command="{Binding ResetFontSizeCommand}" HorizontalOptions="Center" />
+                        <Button Grid.Column="2" Text="A+" Style="{StaticResource PrimaryButton}" WidthRequest="48" Command="{Binding IncreaseFontSizeCommand}" />
+                    </Grid>
+                    <Label Text="The quick brown fox jumps over the lazy dog." FontSize="{DynamicResource FontSizeBody}"
+                           TextColor="{AppThemeBinding Light={StaticResource LightTextSecondary}, Dark={StaticResource DarkTextSecondary}}" Margin="0,4" />
+                </StackLayout>
+            </Border>
+
+            <Label Text="Hardware" Style="{StaticResource TitleLabel}" Margin="0,8,0,0" />
+
+            <Border Style="{StaticResource CardFrame}">
+                <Grid ColumnDefinitions="*,Auto">
+                    <StackLayout Grid.Column="0" Spacing="2">
+                        <Label Text="Camera" FontSize="{DynamicResource FontSizeMedium}" FontAttributes="Bold"
+                               TextColor="{AppThemeBinding Light={StaticResource LightTextPrimary}, Dark={StaticResource DarkTextPrimary}}" />
+                        <Label Text="{Binding IsCameraAvailable, Converter={StaticResource BoolToAvailableLabelConverter}}" Style="{StaticResource SubtitleLabel}" />
+                    </StackLayout>
+                    <Button Grid.Column="1" Text="Test" Style="{StaticResource SecondaryButton}" Command="{Binding OpenCameraTestCommand}" VerticalOptions="Center" />
+                </Grid>
+            </Border>
+
+            <Border Style="{StaticResource CardFrame}">
+                <StackLayout Spacing="4">
+                    <Label Text="Shake Detection" FontSize="{DynamicResource FontSizeMedium}" FontAttributes="Bold"
+                           TextColor="{AppThemeBinding Light={StaticResource LightTextPrimary}, Dark={StaticResource DarkTextPrimary}}" />
+                    <Label Text="{Binding IsAccelerometerAvailable, Converter={StaticResource BoolToAvailableLabelConverter}}" Style="{StaticResource SubtitleLabel}" />
+                    <Label Text="Shake on Menu page for Chef Recommendation" FontSize="{DynamicResource FontSizeSmall}"
+                           TextColor="{AppThemeBinding Light={StaticResource LightTextSecondary}, Dark={StaticResource DarkTextSecondary}}" />
+                </StackLayout>
+            </Border>
+
+            <Border Style="{StaticResource CardFrame}">
+                <StackLayout Spacing="4">
+                    <Label Text="Data Source" FontSize="{DynamicResource FontSizeMedium}" FontAttributes="Bold"
+                           TextColor="{AppThemeBinding Light={StaticResource LightTextPrimary}, Dark={StaticResource DarkTextPrimary}}" />
+                    <Label Text="{Binding DataSourceLabel}" Style="{StaticResource SubtitleLabel}" />
+                    <Label Text="{Binding ApiUrlLabel}" FontSize="{DynamicResource FontSizeSmall}"
+                           TextColor="{AppThemeBinding Light={StaticResource LightTextSecondary}, Dark={StaticResource DarkTextSecondary}}" />
+                    <Label Text="App tries API first; falls back to local data when offline." FontSize="10"
+                           TextColor="{AppThemeBinding Light={StaticResource LightTextSecondary}, Dark={StaticResource DarkTextSecondary}}" />
+                </StackLayout>
+            </Border>
+
+            <Border Style="{StaticResource CardFrame}">
+                <StackLayout Spacing="4">
+                    <Label Text="About" FontSize="{DynamicResource FontSizeMedium}" FontAttributes="Bold"
+                           TextColor="{AppThemeBinding Light={StaticResource LightTextPrimary}, Dark={StaticResource DarkTextPrimary}}" />
+                    <Label Text="{Binding AppVersion, StringFormat='Western Restaurant {0}'}" Style="{StaticResource BodyLabel}" />
+                    <Label Text=".NET MAUI | Camera | Shake | TTS | Haptic | Dark Mode" FontSize="{DynamicResource FontSizeSmall}"
+                           TextColor="{AppThemeBinding Light={StaticResource LightTextSecondary}, Dark={StaticResource DarkTextSecondary}}" />
+                </StackLayout>
+            </Border>
+
+            <Button Text="Refresh Status" Style="{StaticResource SecondaryButton}" Command="{Binding RefreshStatusCommand}" HorizontalOptions="Center" Margin="0,0,0,24" />
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

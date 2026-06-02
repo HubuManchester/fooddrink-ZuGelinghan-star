@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Western_Restaurant.ViewModels"
+             xmlns:models="clr-namespace:Western_Restaurant.Models"
+             x:Class="Western_Restaurant.Views.MenuPage"
+             x:DataType="vm:MenuViewModel"
+             Style="{StaticResource PageStyle}"
+             Title="{Binding Title}">
+
+    <Grid RowDefinitions="Auto,Auto,Auto,*">
+
+        <!-- Header -->
+        <Grid Grid.Row="0" Padding="16,12" ColumnDefinitions="*,Auto,Auto">
+            <StackLayout>
+                <Label Text="Western Restaurant" Style="{StaticResource TitleLabel}" FontSize="{DynamicResource FontSizeHeader}" />
+                <Label Text="Fine Dining &amp; Drinks" Style="{StaticResource SubtitleLabel}" />
+            </StackLayout>
+            <Button Grid.Column="1" Text="&#x1F3B2;" FontSize="20"
+                    BackgroundColor="{StaticResource SecondaryColor}" TextColor="White"
+                    CornerRadius="16" WidthRequest="36" HeightRequest="36" Padding="0"
+                    VerticalOptions="Center" Command="{Binding RecommendRandomItemCommand}" />
+            <Button Grid.Column="2" Text="?" FontSize="20" FontAttributes="Bold"
+                    BackgroundColor="{StaticResource PrimaryColor}" TextColor="White"
+                    CornerRadius="16" WidthRequest="36" HeightRequest="36" Padding="0"
+                    VerticalOptions="Center" Clicked="OnHelpClicked" />
+        </Grid>
+
+        <!-- Search bar -->
+        <Border Grid.Row="1" Margin="16,0" Padding="8,4" StrokeShape="RoundRectangle 8"
+                Stroke="{AppThemeBinding Light={StaticResource PrimaryLightColor}, Dark=#555}">
+            <Grid ColumnDefinitions="*,Auto">
+                <Entry Grid.Column="0" Text="{Binding SearchQuery}" Placeholder="Search dishes..." Style="{StaticResource EntryStyle}" ReturnType="Search" ReturnCommand="{Binding SearchCommand}" />
+                <Button Grid.Column="1" Text="&#x1F50D;" FontSize="16" BackgroundColor="Transparent" Command="{Binding SearchCommand}" HeightRequest="36" WidthRequest="36" Padding="0" />
+            </Grid>
+        </Border>
+
+        <!-- Category chips -->
+        <ScrollView Grid.Row="2" Orientation="Horizontal" HorizontalScrollBarVisibility="Never" Margin="0,8">
+            <HorizontalStackLayout Spacing="8" Padding="16,0"
+                                   BindableLayout.ItemsSource="{Binding Categories}">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate x:DataType="models:Category">
+                        <Border Padding="14,8" StrokeShape="RoundRectangle 20"
+                                Stroke="{Binding IsSelected, Converter={StaticResource BoolToCategoryStrokeConverter}}"
+                                BackgroundColor="{Binding IsSelected, Converter={StaticResource BoolToCategoryBgConverter}}">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MenuViewModel}}, Path=FilterByCategoryCommand}" CommandParameter="{Binding .}" />
+                            </Border.GestureRecognizers>
+                            <HorizontalStackLayout Spacing="6">
+                                <Label Text="{Binding IconGlyph}" FontSize="16" VerticalOptions="Center" />
+                                <Label Text="{Binding Name}" FontSize="{DynamicResource FontSizeBody}" VerticalOptions="Center"
+                                       TextColor="{Binding IsSelected, Converter={StaticResource BoolToCategoryTextConverter}}" />
+                            </HorizontalStackLayout>
+                        </Border>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </HorizontalStackLayout>
+        </ScrollView>
+
+        <!-- Menu items grid -->
+        <RefreshView Grid.Row="3" IsRefreshing="{Binding IsBusy}" Command="{Binding LoadMenuCommand}">
+            <CollectionView ItemsSource="{Binding MenuItems}" Margin="12,0">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" Span="2" HorizontalItemSpacing="10" VerticalItemSpacing="10" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.EmptyView>
+                    <StackLayout VerticalOptions="Center" HorizontalOptions="Center" Padding="40">
+                        <Label Text="&#x1F37D;" FontSize="48" HorizontalOptions="Center" />
+                        <Label Text="No dishes found" Style="{StaticResource SubtitleLabel}" HorizontalOptions="Center" Margin="0,12,0,0" />
+                        <Button Text="Refresh Menu" Style="{StaticResource SecondaryButton}" Command="{Binding LoadMenuCommand}" HorizontalOptions="Center" Margin="0,8,0,0" />
+                    </StackLayout>
+                </CollectionView.EmptyView>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Dish">
+                        <Border Style="{StaticResource CardFrame}" MinimumHeightRequest="100" Padding="14">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MenuViewModel}}, Path=ViewItemDetailCommand}" CommandParameter="{Binding .}" />
+                            </Border.GestureRecognizers>
+                            <Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="6">
+                                <!-- Category name -->
+                                <Label Grid.Row="0" Text="{Binding CategoryName}" FontSize="11" TextColor="{StaticResource PrimaryColor}"
+                                       FontAttributes="Italic" />
+                                <!-- Name -->
+                                <Label Grid.Row="1" Text="{Binding Name}" FontSize="{DynamicResource FontSizeMedium}" FontAttributes="Bold"
+                                       LineBreakMode="TailTruncation" MaxLines="2"
+                                       TextColor="{AppThemeBinding Light={StaticResource LightTextPrimary}, Dark={StaticResource DarkTextPrimary}}" />
+                                <!-- Price -->
+                                <Label Grid.Row="2" Text="{Binding PriceDisplay}" FontSize="{DynamicResource FontSizeMedium}" FontAttributes="Bold"
+                                       TextColor="{StaticResource PrimaryColor}" HorizontalOptions="End" />
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+
+        <ActivityIndicator Grid.Row="3" IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" Color="{StaticResource PrimaryColor}" HeightRequest="40" VerticalOptions="Center" HorizontalOptions="Center" />
+
+        <Border Grid.Row="3" IsVisible="{Binding HasError}" VerticalOptions="End" Margin="16,0,16,16" BackgroundColor="{StaticResource ErrorColor}" StrokeShape="RoundRectangle 8" Stroke="Transparent" Padding="12,8">
+            <HorizontalStackLayout Spacing="8">
+                <Label Text="!" TextColor="White" FontAttributes="Bold" VerticalOptions="Center" />
+                <Label Text="{Binding ErrorMessage}" TextColor="White" FontSize="{DynamicResource FontSizeSmall}" VerticalOptions="Center" />
+            </HorizontalStackLayout>
+        </Border>
+    </Grid>
+</ContentPage>

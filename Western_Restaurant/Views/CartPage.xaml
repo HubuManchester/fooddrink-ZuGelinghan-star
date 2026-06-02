@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Western_Restaurant.ViewModels"
+             xmlns:models="clr-namespace:Western_Restaurant.Models"
+             x:Class="Western_Restaurant.Views.CartPage"
+             x:DataType="vm:CartViewModel"
+             Style="{StaticResource PageStyle}"
+             Title="{Binding Title}">
+
+    <Grid RowDefinitions="*,Auto">
+        <CollectionView Grid.Row="0" ItemsSource="{Binding CartItems}" Margin="12,8">
+            <CollectionView.EmptyView>
+                <StackLayout VerticalOptions="Center" HorizontalOptions="Center" Padding="40">
+                    <Label Text="&#x1F6D2;" FontSize="64" HorizontalOptions="Center" />
+                    <Label Text="Your cart is empty" Style="{StaticResource TitleLabel}" HorizontalOptions="Center" Margin="0,12,0,0" />
+                    <Label Text="Browse the menu and add some delicious dishes!" Style="{StaticResource SubtitleLabel}" HorizontalOptions="Center" HorizontalTextAlignment="Center" Margin="0,4,0,0" />
+                    <Button Text="Browse Menu" Style="{StaticResource PrimaryButton}" HorizontalOptions="Center" Margin="0,16,0,0" Clicked="OnBrowseMenuClicked" />
+                </StackLayout>
+            </CollectionView.EmptyView>
+            <CollectionView.Header>
+                <HorizontalStackLayout Padding="0,0,0,8" Spacing="8">
+                    <Label Text="{Binding CartItems.Count, StringFormat='Items: {0}'}" Style="{StaticResource BodyLabel}" VerticalOptions="Center" />
+                    <Button Text="Clear All" BackgroundColor="Transparent" TextColor="{StaticResource ErrorColor}" FontSize="{DynamicResource FontSizeSmall}" Command="{Binding ClearCartCommand}" VerticalOptions="Center"
+                            IsVisible="{Binding IsCartEmpty, Converter={StaticResource InvertBoolConverter}}" />
+                </HorizontalStackLayout>
+            </CollectionView.Header>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:OrderItem">
+                    <Border Style="{StaticResource CardFrame}" Margin="0,4">
+                        <Grid ColumnDefinitions="*" RowDefinitions="Auto,Auto,Auto" RowSpacing="6" ColumnSpacing="12">
+                            <Label Grid.Row="0" Grid.Column="0" Text="{Binding MenuItemName}" FontSize="{DynamicResource FontSizeMedium}" FontAttributes="Bold" LineBreakMode="TailTruncation"
+                                   TextColor="{AppThemeBinding Light={StaticResource LightTextPrimary}, Dark={StaticResource DarkTextPrimary}}" />
+                            <Label Grid.Row="1" Grid.Column="0" Text="{Binding PriceDisplay}" FontSize="{DynamicResource FontSizeSmall}"
+                                   TextColor="{AppThemeBinding Light={StaticResource LightTextSecondary}, Dark={StaticResource DarkTextSecondary}}" />
+                            <HorizontalStackLayout Grid.Row="2" Grid.Column="0" Spacing="8">
+                                <Button Text="-" WidthRequest="32" HeightRequest="32" CornerRadius="16" FontSize="14" Padding="0" Style="{StaticResource SecondaryButton}"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:CartViewModel}}, Path=DecreaseItemQuantityCommand}" CommandParameter="{Binding .}" />
+                                <Label Text="{Binding Quantity}" FontSize="{DynamicResource FontSizeBody}" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="24" HorizontalTextAlignment="Center"
+                                       TextColor="{AppThemeBinding Light={StaticResource LightTextPrimary}, Dark={StaticResource DarkTextPrimary}}" />
+                                <Button Text="+" WidthRequest="32" HeightRequest="32" CornerRadius="16" FontSize="14" Padding="0" Style="{StaticResource PrimaryButton}"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:CartViewModel}}, Path=IncreaseItemQuantityCommand}" CommandParameter="{Binding .}" />
+                            </HorizontalStackLayout>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Border Grid.Row="1" IsVisible="{Binding IsCartEmpty, Converter={StaticResource InvertBoolConverter}}" Padding="16"
+                StrokeShape="RoundRectangle 16,16,0,0" BackgroundColor="{AppThemeBinding Light={StaticResource LightSurface}, Dark={StaticResource DarkSurface}}" Stroke="Transparent">
+            <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto" RowSpacing="4">
+                <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
+                    <Label Text="Subtotal" Style="{StaticResource BodyLabel}" />
+                    <Label Grid.Column="1" Text="{Binding Subtotal, StringFormat='£{0:F2}'}" Style="{StaticResource BodyLabel}" />
+                </Grid>
+                <Grid Grid.Row="1" ColumnDefinitions="*,Auto">
+                    <Label Text="Tax (10%)" Style="{StaticResource BodyLabel}" />
+                    <Label Grid.Column="1" Text="{Binding Tax, StringFormat='£{0:F2}'}" Style="{StaticResource BodyLabel}" />
+                </Grid>
+                <BoxView Grid.Row="2" HeightRequest="1" Color="#DDD" Margin="0,4" />
+                <Grid Grid.Row="3" ColumnDefinitions="*,Auto" Margin="0,4,0,0">
+                    <Label Text="Total" FontSize="{DynamicResource FontSizeMedium}" FontAttributes="Bold"
+                           TextColor="{AppThemeBinding Light={StaticResource LightTextPrimary}, Dark={StaticResource DarkTextPrimary}}" />
+                    <Label Grid.Column="1" Text="{Binding Total, StringFormat='£{0:F2}'}" FontSize="{DynamicResource FontSizeLarge}" FontAttributes="Bold" TextColor="{StaticResource PrimaryColor}" />
+                </Grid>
+                <Button Grid.Row="4" Text="Proceed to Checkout" Style="{StaticResource PrimaryButton}" HeightRequest="52" FontSize="{DynamicResource FontSizeMedium}" Margin="0,12,0,0" />
+            </Grid>
+        </Border>
+    </Grid>
+</ContentPage>

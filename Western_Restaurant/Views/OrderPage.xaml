@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Western_Restaurant.ViewModels"
+             x:Class="Western_Restaurant.Views.OrderPage"
+             x:DataType="vm:OrderViewModel"
+             Style="{StaticResource PageStyle}"
+             Title="{Binding Title}">
+
+    <ScrollView>
+        <Grid RowDefinitions="Auto,*" Padding="16" RowSpacing="16">
+
+            <Border Grid.Row="0" StrokeShape="RoundRectangle 12" Padding="16" BackgroundColor="{AppThemeBinding Light=#FFF0E6, Dark=#2A2018}" Stroke="Transparent">
+                <StackLayout Spacing="4">
+                    <Label Text="Order Summary" FontSize="{DynamicResource FontSizeLarge}" FontAttributes="Bold"
+                           TextColor="{AppThemeBinding Light={StaticResource LightTextPrimary}, Dark={StaticResource DarkTextPrimary}}" />
+                    <Label Text="{Binding OrderSummary}" Style="{StaticResource BodyLabel}" />
+                    <Label Text="{Binding ItemCount, StringFormat='{0} item(s) in your order'}" Style="{StaticResource SubtitleLabel}" />
+                </StackLayout>
+            </Border>
+
+            <StackLayout Grid.Row="1" Spacing="16">
+                <Label Text="Your Details" Style="{StaticResource TitleLabel}" />
+
+                <StackLayout Spacing="4">
+                    <Label Text="Name *" Style="{StaticResource BodyLabel}" FontAttributes="Bold" />
+                    <Entry Text="{Binding CustomerName}" Placeholder="Enter your full name" Style="{StaticResource EntryStyle}" ReturnType="Next" />
+                    <Label Text="{Binding NameError}" Style="{StaticResource ErrorLabel}" IsVisible="{Binding HasNameError}" />
+                </StackLayout>
+
+                <StackLayout Spacing="4">
+                    <Label Text="Phone Number *" Style="{StaticResource BodyLabel}" FontAttributes="Bold" />
+                    <Entry Text="{Binding CustomerPhone}" Placeholder="e.g. +1 555-0123" Style="{StaticResource EntryStyle}" Keyboard="Telephone" ReturnType="Next" />
+                    <Label Text="{Binding PhoneError}" Style="{StaticResource ErrorLabel}" IsVisible="{Binding HasPhoneError}" />
+                </StackLayout>
+
+                <StackLayout Spacing="4">
+                    <Label Text="Email (optional)" Style="{StaticResource BodyLabel}" FontAttributes="Bold" />
+                    <Entry Text="{Binding CustomerEmail}" Placeholder="e.g. name@example.com" Style="{StaticResource EntryStyle}" Keyboard="Email" ReturnType="Next" />
+                    <Label Text="{Binding EmailError}" Style="{StaticResource ErrorLabel}" IsVisible="{Binding HasEmailError}" />
+                </StackLayout>
+
+                <StackLayout Spacing="4">
+                    <Label Text="Table Number *" Style="{StaticResource BodyLabel}" FontAttributes="Bold" />
+                    <Entry Text="{Binding TableNumberText}" Placeholder="e.g. 12" Style="{StaticResource EntryStyle}" Keyboard="Numeric" ReturnType="Next" />
+                    <Label Text="{Binding TableError}" Style="{StaticResource ErrorLabel}" IsVisible="{Binding HasTableError}" />
+                </StackLayout>
+
+                <StackLayout Spacing="4">
+                    <Label Text="Special Instructions" Style="{StaticResource BodyLabel}" FontAttributes="Bold" />
+                    <Editor Text="{Binding SpecialInstructions}" Placeholder="Any dietary requirements or special requests..." HeightRequest="80"
+                            FontSize="{DynamicResource FontSizeBody}"
+                            TextColor="{AppThemeBinding Light={StaticResource LightTextPrimary}, Dark={StaticResource DarkTextPrimary}}"
+                            PlaceholderColor="{AppThemeBinding Light={StaticResource LightTextSecondary}, Dark={StaticResource DarkTextSecondary}}"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource LightSurface}, Dark={StaticResource DarkSurface}}" />
+                </StackLayout>
+
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="12" Margin="0,8,0,0">
+                    <Button Grid.Column="0" Text="Clear Form" Style="{StaticResource SecondaryButton}" Command="{Binding ClearFormCommand}" />
+                    <Button Grid.Column="1" Text="Place Order" Style="{StaticResource PrimaryButton}" Command="{Binding SubmitOrderCommand}" HeightRequest="52" FontSize="{DynamicResource FontSizeMedium}" />
+                </Grid>
+
+                <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" Color="{StaticResource PrimaryColor}" Margin="0,8" />
+            </StackLayout>
+        </Grid>
+    </ScrollView>
+</ContentPage>

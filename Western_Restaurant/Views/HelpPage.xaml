@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Western_Restaurant.Views.HelpPage"
+             Style="{StaticResource PageStyle}"
+             Title="Help">
+
+    <ScrollView>
+        <StackLayout Padding="20" Spacing="16">
+
+            <Label Text="How to Use" Style="{StaticResource TitleLabel}" />
+
+            <Border Style="{StaticResource CardFrame}" Padding="16">
+                <StackLayout Spacing="10">
+                    <Label Text="&#x1F37D; Browse Menu" FontSize="{DynamicResource FontSizeMedium}" FontAttributes="Bold"
+                           TextColor="{AppThemeBinding Light={StaticResource LightTextPrimary}, Dark={StaticResource DarkTextPrimary}}" />
+                    <Label Text="Browse dishes by category. Tap any dish to view details and add to your cart."
+                           Style="{StaticResource BodyLabel}" LineBreakMode="WordWrap" />
+                </StackLayout>
+            </Border>
+
+            <Border Style="{StaticResource CardFrame}" Padding="16">
+                <StackLayout Spacing="10">
+                    <Label Text="&#x1F50D; Search" FontSize="{DynamicResource FontSizeMedium}" FontAttributes="Bold"
+                           TextColor="{AppThemeBinding Light={StaticResource LightTextPrimary}, Dark={StaticResource DarkTextPrimary}}" />
+                    <Label Text="Use the search bar at the top to find dishes by name. Type and press Search to filter results."
+                           Style="{StaticResource BodyLabel}" LineBreakMode="WordWrap" />
+                </StackLayout>
+            </Border>
+
+            <Border Style="{StaticResource CardFrame}" Padding="16">
+                <StackLayout Spacing="10">
+                    <Label Text="&#x1F6D2; Cart &amp; Checkout" FontSize="{DynamicResource FontSizeMedium}" FontAttributes="Bold"
+                           TextColor="{AppThemeBinding Light={StaticResource LightTextPrimary}, Dark={StaticResource DarkTextPrimary}}" />
+                    <Label Text="Add dishes to your cart, adjust quantities, and proceed to checkout to place your order."
+                           Style="{StaticResource BodyLabel}" LineBreakMode="WordWrap" />
+                </StackLayout>
+            </Border>
+
+            <Border Style="{StaticResource CardFrame}" Padding="16">
+                <StackLayout Spacing="10">
+                    <Label Text="&#x1F4AC; Comments" FontSize="{DynamicResource FontSizeMedium}" FontAttributes="Bold"
+                           TextColor="{AppThemeBinding Light={StaticResource LightTextPrimary}, Dark={StaticResource DarkTextPrimary}}" />
+                    <Label Text="Share your dining experience. Take photos or pick from gallery to attach to your comments."
+                           Style="{StaticResource BodyLabel}" LineBreakMode="WordWrap" />
+                </StackLayout>
+            </Border>
+
+            <Border Style="{StaticResource CardFrame}" Padding="16">
+                <StackLayout Spacing="10">
+                    <Label Text="&#x1F4F1; Shake for Recommendation" FontSize="{DynamicResource FontSizeMedium}" FontAttributes="Bold"
+                           TextColor="{AppThemeBinding Light={StaticResource LightTextPrimary}, Dark={StaticResource DarkTextPrimary}}" />
+                    <Label Text="On the Menu page, shake your device to get a random Chef's Recommendation!"
+                           Style="{StaticResource BodyLabel}" LineBreakMode="WordWrap" />
+                </StackLayout>
+            </Border>
+
+            <Border Style="{StaticResource CardFrame}" Padding="16">
+                <StackLayout Spacing="10">
+                    <Label Text="&#x1F3A4; Text-to-Speech" FontSize="{DynamicResource FontSizeMedium}" FontAttributes="Bold"
+                           TextColor="{AppThemeBinding Light={StaticResource LightTextPrimary}, Dark={StaticResource DarkTextPrimary}}" />
+                    <Label Text="On the dish detail page, tap the speaker button to hear the description read aloud."
+                           Style="{StaticResource BodyLabel}" LineBreakMode="WordWrap" />
+                </StackLayout>
+            </Border>
+
+            <Border Style="{StaticResource CardFrame}" Padding="16">
+                <StackLayout Spacing="10">
+                    <Label Text="&#x2699; Settings" FontSize="{DynamicResource FontSizeMedium}" FontAttributes="Bold"
+                           TextColor="{AppThemeBinding Light={StaticResource LightTextPrimary}, Dark={StaticResource DarkTextPrimary}}" />
+                    <Label Text="Customize dark mode, font size, and check hardware capabilities in the Settings tab."
+                           Style="{StaticResource BodyLabel}" LineBreakMode="WordWrap" />
+                </StackLayout>
+            </Border>
+
+        </StackLayout>
+    </ScrollView>
+</ContentPage>
